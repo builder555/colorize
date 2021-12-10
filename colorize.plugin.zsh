@@ -34,7 +34,13 @@ function fgrep() {
 }
 
 function diff() {
-  command diff --color "$@"
+  if [[ $(uname) == "Darwin" ]]; then
+    if (( $+commands[grc] )); then
+      command grc --colour=auto diff "$@"
+    fi
+  else
+    command diff --color "$@"
+  fi
 }
 
 if (( $+commands[grc] )); then
